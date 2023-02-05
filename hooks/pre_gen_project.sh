@@ -46,7 +46,6 @@ fi
 poetry run django-admin startproject $appname .
 
 
-mkdir -p $appname/static/frontend
 echo ""
 echo "****************************************************"
 echo ""
@@ -75,6 +74,7 @@ echo "****************************************************"
 echo ""
 
 mkdir -p djjs/static
+mkdir -p djjs/generated
 mv frontend/public/favicon.png djjs/static
 mv frontend/public/global.css djjs/static
 
