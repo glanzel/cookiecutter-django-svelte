@@ -31,9 +31,10 @@ It makes havvy use of cookiecutters scripting features, therefore it stays up to
 ## Install
 ```
 python3 -m pip install cookiecutter
-cookiecutter [URL_OF_THIS_PROJECT]
+cookiecutter https://github.com/glanzel/cookiecutter-django-svelte
 ```
 
+## Run
 ### terminal 1
 ```
 cd [project_slug]/frontend
