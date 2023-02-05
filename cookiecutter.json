@@ -1,0 +1,12 @@
+{
+  "project_slug": "test-project",
+  "add_wagtail": ["y","n"],
+
+  "_extensions": ["jinja2_git.GitExtension"],
+  "_copy_without_render": [
+    ".venv",
+    "docs/_build",
+    "cp",
+    "tail"
+  ]
+}
