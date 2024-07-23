@@ -1,78 +1,160 @@
 # Django - Svelte  Template [optional +Wagtail] 
 
-State of the Art **django  svelte** [optional +Wagtail] template focused on code quality.
+State of the Art **django  svelte** [optional +Wagtail] template focused on code best-practices.
 
-## beta. 
-as it is only a template you could use it in production anyway, but it needs a little more testing to find out if it works out of the box under all circumstances. 
+## Beta 
+This is a beta version, as it is only a template. You can use it for a production website, but YMMV. It hasn't been extensively tested.
 
 ## Purpose
-
-This project scaffolds a django svelte project structure.
-It makes havvy use of cookiecutters scripting features, therefore it stays up to date
-( but may only work on linux systems )
+This cookiecutter template provides scaffolding for a Django+Svelte(+Wagtail) project.
+It will likely work on Linux systems.
 
 ## Features
+- Should be future proof - just upgrade Python, Django, Vite+Svelte, and Wagtail(optional) versions
+- Supports python3.11+ and Django 5.0+
+- Optional Wagtail integration
+- Lightweight
 
-- Always up-to-date with the help of install commands 
-- Supports latest python3.11+ and Django 4.1+
-- pluggable wagtail and frontend integration
-- Cutting Edge Tech Stack
-- Slim. Features which come on Top of this stack are not intergrated so you are free to choose. 
-
-## Tech Stack
-
-- [poetry](https://github.com/python-poetry/poetry) for managing django dependencies
-- [environ](https://github.com/joke2k/django-environ) for 12 factor methology to configure django (and svelte)
+### Dependencies
+- [Django]()
+- [Vite](https://github.com/vitejs/vite) Svelte project JS/TS/ES dependencie bundling (better than `webpack` or `Rollup`) 
+- [Poetry](https://github.com/python-poetry/poetry) for managing django dependencies
+- [django-environ](https://github.com/joke2k/django-environ) for 12 factor methology to configure django (and svelte)
 - [whitenoise](https://github.com/evansd/whitenoise) pretty efficient self-contained  serving of static files 
-- additional [wagtail](https://github.com/wagtail/wagtail) installation for a highly in django integrated cms
-- [Vite](https://github.com/vitejs/vite) Up-To-Date Frontend Tooling for Svelte 
 
+- [wagtail](https://github.com/wagtail/wagtail)(optional) for a highly in django integrated cms
 
 ## Install
-```
-python3 -m pip install cookiecutter
+```bash
+python3 -m pip install cookiecutter jinja2-git
 cookiecutter https://github.com/glanzel/cookiecutter-django-svelte
 ```
 
 ## Run
 ### terminal 1
-```
-cd [project_slug]/frontend
+```bash
+cd {{project_slug}}/frontend
 npx vite build --watch
 ```
 
 ### terminal2
-```
-cd [project_slug]
+```bash
+cd {{project_slug}}
 poetry run python3 manage.py runserver
 ```
 
 **You should now see the svelte App delivered by django runserver under localhost:8000**
 
-## Structure
-- frontend contains all svelte code. 
+## Directory structure
+```
+└── {{project_slug}}
+    ├── backend
+    │   ├── asgi.py
+    │   ├── hello
+    │   │   ├── migrations
+    │   │   │   └── 0001_initial.py
+    │   │   ├── models.py
+    │   │   ├── serializers.py
+    │   │   └── views.py
+    │   ├── settings
+    │   │   ├── defaults.py
+    │   │   ├── logging.py
+    │   │   ├── main.py
+    │   │   └── mods.py
+    │   ├── urls.py
+    │   └── wsgi.py
+    ├── db.sqlite3
+    ├── djjs
+    │   ├── apps.py
+    │   ├── generated
+    │   ├── settings.py
+    │   ├── static
+    │   ├── templates
+    │   │   ├── base.html
+    │   │   └── helloworld.html
+    │   ├── urls.py
+    │   └── views.py
+    ├── frontend
+    │   ├── index.html
+    │   ├── jsconfig.json
+    │   ├── package.json
+    │   ├── package-lock.json
+    │   ├── public
+    │   │   └── vite.svg
+    │   ├── README.md
+    │   ├── src
+    │   │   ├── app.css
+    │   │   ├── App.svelte
+    │   │   ├── assets
+    │   │   │   └── svelte.svg
+    │   │   ├── lib
+    │   │   │   └── Counter.svelte
+    │   │   └── vite-env.d.ts
+    │   └── templates
+    │       └── helloworld_assets.html
+    ├── manage.py
+    ├── poetry.lock
+    ├── pyproject.toml
+    └── tail
+        ├── api.py
+        ├── home
+        │   ├── migrations
+        │   │   ├── 0001_initial.py
+        │   │   └── 0002_create_homepage.py
+        │   ├── models.py
+        │   ├── static
+        │   │   └── css
+        │   │       └── welcome_page.css
+        │   └── templates
+        │       └── home
+        │           ├── home_page.html
+        │           └── welcome_page.html
+        ├── search
+        │   ├── templates
+        │   │   └── search
+        │   │       └── search.html
+        │   └── views.py
+        ├── settings.py
+        ├── static
+        │   ├── css
+        │   │   └── testtail.css
+        │   └── js
+        ├── templates
+        │   ├── 404.html
+        │   ├── 500.html
+        │   └── base.html
+        └── urls.py
+```
 
-- backend contains the django main settings and application logic and serves the data per rest framework under [server_url]/api/dj/
-
-- djjs is a django app which provides the generated svelte code via django server process and optionally django frontend code
-
-- tail contains the wagtail. this aims to act as a better adminarea but can additionally aswell provide data for the frontend themself via [server_url]/api/w2/  
+- `backend/` - Django project (`settings.py`, `urls.py`, ``w``|``asgi.py`` and `hello/`) app
+- `djjs/` - Django Rest Framework API for Django & Svelte javascript 
+- `frontend/` - Svelte app
+  - `public/` - external static assets (images)
+  - `frontend/src/` - your Svelte code and assets
+- `tail/` - Wagtail pages (``settings.py`` and `home` page Django templates)
+- `tail/home` - Wagtail home page @ {{server_url}}/api/w2/
 
 #### Svelte To Django
 When builing Svelte via `npx vite build --watch` each input configured in frontend/vite.config.js becomes one bundle of assets in frontend/generated. (If you need more then one bundle of assets for a mpa just add several there) 
-Each assets bundle is integrated into django inside the djjs app via the [your_name]_assets.html file. So you can easily build a spa or a mixed app with frontend parts from django and svelte together. 
-A fully working hello world example is included. 
+Each asset's bundle is integrated into Django inside the `djjs/` app via the {{your_page_name}}_assets.html file. So you can build a SPA (Single-Page App) or a mixed app with Django and Svelte together in the same directory. 
+A fully working `helloworld` example app is included. 
 
-#### Django Organisation 
-I aim to Seperate django core (backend) from wagtail an django forntend app as good as possible. Therefore both apps provides urls and settings files which can be plugged into or apart from the core system easily. If you want to switch to another frontend framework you can just replace djjs/generated and frontend or even remove the whole djjs folder and build your frontend with wagtail for example if you want a more traditional django wagtail webapp.   
+#### Django directory structure 
+This project separates the Wagtail project (`tail`) from the core Django project (`backend/` and `frontend/`).
+Both apps have `urls.py` and `settings.py` files which can be plugged into the Django core backend or remain as separate projects.
+If you want to switch to another frontend framework you can just replace ``djjs/generated`` and `frontend/` directories or even remove the whole `djjs` directory and build your frontend with Wagtail, for a more Wagtail-focused setup.   
 
-## more to come
-if the template get used (wiedly) i will add additional features to it
-- more documentation / small codechanges
-- routing vor svelte (probably svelte-navigator)
-- convert shell script to python for better portability
-- add optional linters, testing tools and or docker support
-- server side rendering feature
- 
+## TODO
+You can contribute by helping with:
+- [ ] Documentation
+- [ ] Cleanup
+- [ ] Svelte routing (svelte-navigator ?)
+- [ ] Convert shell installation script to Python for portability to non-Linux OSes
+- [ ] Add linters to vite build (ruff? flake8? black? standardjs? eslint?)
+- [ ] Add tests (pytest?)
+- [ ] Optional Dockerfile
+- [ ] Optional Kubernetes cluster config
+- [ ] Optional `gitlab-ci.yaml`
+- [ ] Add non-django server-side rendering? 
 
 
